@@ -1,0 +1,46 @@
+.panel {
+  margin-bottom: 8px;
+}
+
+.panel-default>.panel-heading {
+  background-color: #FAFAFA;
+}
+
+.App-logo {
+  animation: App-logo-spin alternate infinite 2s linear;
+  height: 80px;
+}
+
+.media-subheading {
+
+}
+
+.beer-info>p {
+  margin: 0px;
+}
+
+.col-xs-4 {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 200px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.App-body {
+  padding: 20px;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(30deg); }
+}
