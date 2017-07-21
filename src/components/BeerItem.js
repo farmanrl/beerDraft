@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel } from 'react-bootstrap';
+import { Panel, Fade } from 'react-bootstrap';
 
 import BeerBody from './BeerBody';
 import BeerHeading from './BeerHeading';
@@ -9,7 +9,11 @@ class BeerItem extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false }
+    this.state = { show: false }
+  }
+
+  componentDidMount() {
+    setTimeout(() => { this.setState({ show: true }) }, this.props.timeout)
   }
 
   shouldRender = () => (
@@ -22,22 +26,24 @@ class BeerItem extends Component {
 
   render() {
     return (
-      <Panel
-        collapsible
-        expanded={this.state.open}
-        onClick={()=> this.setState({ open: !this.state.open })}
-        header={
-          <BeerHeading
-            beer={this.beer}
-            beerId={this.beer.id}
-            shouldRender={this.shouldRender}
-            tapped={this.props.tapped}
-          />
-        }
-        style={{ width: '90%' }}
-      >
+      <Fade in={this.state.show} transitionAppear timeout={this.props.timeout}>
+        <Panel
+          collapsible
+          expanded={this.state.open}
+          onClick={()=> this.setState({ open: !this.state.open })}
+          header={
+            <BeerHeading
+              beer={this.beer}
+              beerId={this.beer.id}
+              shouldRender={this.shouldRender}
+              liked={this.props.liked}
+            />
+          }
+          style={{ width: '90%' }}
+        >
         { this.shouldRender() && <BeerBody beer={this.beer} /> }
-      </Panel>
+        </Panel>
+      </Fade>
     );
   }
 }

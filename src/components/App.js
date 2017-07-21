@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Navbar, MenuItem, NavDropdown, Nav, FormGroup, FormControl, InputGroup } from 'react-bootstrap';
+import firebase, { auth, provider } from '../firebase.js';
+
 import BeerList from './BeerList';
 import beer from './beer.png';
 import breweryDb from './breweryDb.png';
@@ -12,7 +14,35 @@ class App extends Component {
       value: '',
       type: 'beer',
       searchValue: '',
+      user: null,
     }
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      }
+    });
+  }
+
+  login = () => {
+    auth.signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          this.setState({
+            user
+          });
+        });
+  }
+
+  logout = () => {
+    auth.signOut()
+        .then(() => {
+          this.setState({
+            user: null
+          });
+        });
   }
 
   handleChange = (e) => {
@@ -32,13 +62,18 @@ class App extends Component {
               <div
                 style={{
                   display: 'flex',
-                  width: 172,
+                  width: '80%',
                   justifyContent: 'space-between',
                   alignItems: 'center'
                 }}
               >
-                <img src={beer} style={{ height: '32px', width: 'auto' }} alt="" />
-                <h4>Beer Draft</h4>
+                <img src={beer} style={{ height: '32px', width: 'auto', marginRight: '18px' }} alt="" />
+                <h4 style={{ marginRight: 'auto' }}>Beer Draft</h4>
+                {this.state.user ?
+                 <Button bsStyle="primary" style={{ marginLeft: 'auto' }} onClick={this.logout}>Logout</Button>
+                 :
+                 <Button bsStyle="primary" style={{ marginLeft: 'auto' }} onClick={this.login}>Login</Button>
+                }
               </div>
             </Navbar.Brand>
             <Navbar.Toggle/>
@@ -87,7 +122,7 @@ class App extends Component {
                     width: 'auto',
                     paddingLeft: 12
                   }}
-                  alt=""
+                  alt="powered-by-brewerydb"
                 />
               </a>
             </Nav>

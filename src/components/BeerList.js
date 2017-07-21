@@ -6,7 +6,8 @@ import BeerItem from './BeerItem';
 
 const styles = {
   beerList: {
-    minHeight: '100%',
+    minHeight: '75vh',
+    height: 'auto',
     backgroundColor: '#FFA000',
     display: 'flex',
     flexDirection: 'column',
@@ -48,7 +49,9 @@ class BeerList extends Component {
       if (Object.keys(beerItems).length < 50) {
         this.setState({ hasMore: false });
       }
+      let timeout = 0;
       Object.keys(beerItems).forEach((beer) => {
+        timeout += 30;
         this.setState(prevState => ({
           beerItems: [
             ...prevState.beerItems,
@@ -56,6 +59,7 @@ class BeerList extends Component {
               key={beerItems[beer].id}
               beer={beerItems[beer]}
               tapped={false}
+              timeout={timeout}
             />
           ],
         }));
@@ -118,8 +122,8 @@ class BeerList extends Component {
   }
 
   loaderIcon = (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Loading type='bubbles' color='#FFC400' height='120px' width='240px' />
+    <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#FFA000', height: '20vh' }}>
+      <Loading type='bubbles' width='20vh'/>
     </div>
   );
 
@@ -132,9 +136,11 @@ class BeerList extends Component {
         loader={this.loaderIcon}
         threshold={200}
       >
-        <div style={styles.beerList}>
-          {this.state.beerItems}
-        </div>
+        {this.state.beerItems &&
+         <div style={styles.beerList}>
+           {this.state.beerItems}
+         </div>
+        }
       </InfiniteScroll>
     );
   }
