@@ -16,12 +16,20 @@ class BeerItem extends Component {
     setTimeout(() => { this.setState({ show: true }) }, this.props.timeout)
   }
 
-  shouldRender = () => (
+  open = () => {
+    this.setState({ open: !this.state.open })
+  }
+
+  isDrafted = (beer, draft) => draft.hasOwnProperty(beer.id);
+
+  moreInformation = () => (
     this.beer.description ||
     this.beer.year ||
     this.beer.servingTemperatureDisplay ||
     this.beer.available ||
-    this.beer.glass
+    this.beer.glass ||
+    this.beer.brewery ||
+    this.beer.ingredients
   );
 
   render() {
@@ -30,18 +38,21 @@ class BeerItem extends Component {
         <Panel
           collapsible
           expanded={this.state.open}
-          onClick={()=> this.setState({ open: !this.state.open })}
           header={
+            <div onClick={() => this.open()}>
             <BeerHeading
               beer={this.beer}
               beerId={this.beer.id}
-              shouldRender={this.shouldRender}
-              liked={this.props.liked}
-            />
+              moreInformation={this.moreInformation()}
+              user={this.props.user}
+              isDrafted={this.props.draft ? this.isDrafted(this.beer, this.props.draft) : false}
+              open={this.open}
+                   />
+            </div>
           }
           style={{ width: '90%' }}
         >
-        { this.shouldRender() && <BeerBody beer={this.beer} /> }
+          { this.moreInformation() && <BeerBody beer={this.beer}/> }
         </Panel>
       </Fade>
     );

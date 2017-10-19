@@ -2,6 +2,7 @@ import React from 'react';
 import { Media, Button } from 'react-bootstrap';
 import BeerIcon from './BeerIcon';
 import BeerSubheading from './BeerSubheading';
+import { userList } from '../firebase.js';
 
 const BeerHeading = (props) => {
   const beer = props.beer;
@@ -22,8 +23,15 @@ const BeerHeading = (props) => {
     }
   }
 
-  const tapBeer = (uid, key) => {
-    alert('This beer is now tapped!');
+  const updateDraft = (id, beer) => {
+    const draftList = userList.child(props.user.uid + '/draftList')
+    if (beer) {
+      const entry = {};
+      entry[id] = beer;
+      draftList.update(entry);
+    } else {
+      draftList.child(id).remove();
+    }
   }
 
   const getGlasswareId = () => beer.glasswareId ? beer.glasswareId : null
@@ -37,16 +45,27 @@ const BeerHeading = (props) => {
         <BeerSubheading beer={beer} />
       </Media.Body>
       <hr />
-      { props.shouldRender() && <i>more information...</i> }
-      { props.user &&
-        <Button
-          onClick={() => tapBeer(props.user.uid, props.beerId)}
-          bsStyle="primary"
-          style={{ float: 'right' }}
-        >
-          Tap
-        </Button>
-      }
+      <div onClick={() => props.open()}>
+        { props.moreInformation && <i>more information...</i> }
+        { props.user && !props.isDrafted &&
+          <Button
+            onClick={() => updateDraft(props.beerId, beer)}
+            bsStyle="primary"
+            style={{ float: 'right' }}
+          >
+            Draft
+          </Button>
+        }
+        { props.user && props.isDrafted &&
+          <Button
+            onClick={() => updateDraft(props.beerId, null)}
+            bsStyle="primary"
+            style={{ float: 'right' }}
+          >
+            Undraft
+          </Button>
+        }
+      </div>
     </Media>
   );
 };

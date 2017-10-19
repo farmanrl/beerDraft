@@ -1,4 +1,5 @@
 import React from 'react';
+
 const BeerBody = (props) => {
   const beer = props.beer;
 
@@ -45,24 +46,30 @@ const BeerBody = (props) => {
       { beer.glass &&
       <div>
         <strong>Glassware</strong>
-        <p>{ beer.glass.name }</p>
+        <p>{beer.glass.name}</p>
       </div>
       }
       { beer.ingredients && <hr /> }
       { beer.ingredients && <h4>Ingredients</h4> }
       { beer.ingredients &&
         Object.keys(beer.ingredients).map((ingredient) => {
-          const iList = beer.ingredients[ingredient]
-          const ingredientList = Object.keys(iList).map((i) => (
+          const iList = beer.ingredients[ingredient];
+          const ingredientList = Object.keys(iList).map(i => (
             <p>
               {
-                iList[i].name.charAt(0).toUpperCase() + iList[i].name.slice(1)
+                iList[i].name.charAt(0).toUpperCase() +
+                iList[i].name.slice(1)
               }
             </p>
           ));
           return (
             <div>
-              <strong>{ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}</strong>
+              <strong>
+                {
+                  ingredient.charAt(0).toUpperCase() +
+                  ingredient.slice(1)
+                }
+              </strong>
               {ingredientList}
             </div>
           );
@@ -71,7 +78,7 @@ const BeerBody = (props) => {
       { beer.socialAccounts && <hr /> }
       { beer.socialAccounts && <h4>Social Accounts</h4> }
       { beer.socialAccounts &&
-        Object.keys(beer.socialAccounts).map((account) => (
+        Object.keys(beer.socialAccounts).map(account => (
           <div>
             <strong>{beer.socialAccounts[account].socialMedia.name}</strong>
             <a href={beer.socialAccounts[account].socialMedia.link}>
@@ -82,10 +89,12 @@ const BeerBody = (props) => {
       }
       { beer.breweries && <hr /> }
       { beer.breweries && <h4>Brewery</h4> }
-      { beer.breweries[0] &&
+      { beer.breweries &&
         <div>
           { beer.breweries[0].website ?
-            <a href={beer.breweries[0].website}><strong>{beer.breweries[0].name}</strong></a>
+            <a href={beer.breweries[0].website}>
+              <strong>{beer.breweries[0].name}</strong>
+            </a>
             :
             <strong>{beer.breweries[0].name}</strong>
           }
@@ -101,16 +110,20 @@ const BeerBody = (props) => {
           { beer.breweries[0].locations &&
             <i>
               { beer.breweries[0].locations[0].locationTypeDisplay }
-              { beer.breweries[0].established && <span> - Est. {beer.breweries[0].established}</span> }
+              { beer.breweries[0].established &&
+                <span> - Est. {beer.breweries[0].established}</span>
+              }
               <br />
             </i>
           }
           <br />
-          { beer.breweries[0].description && <p>{beer.breweries[0].description}</p> }
+          { beer.breweries[0].description &&
+            <p>{beer.breweries[0].description}</p>
+          }
         </div>
       }
     </div>
   );
-}
+};
 
 export default BeerBody;

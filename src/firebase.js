@@ -14,3 +14,6 @@ firebase.initializeApp(config);
 export default firebase;
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
+export const database = firebase.database();
+
+export const userList = database.ref('userList/');
