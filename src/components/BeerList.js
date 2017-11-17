@@ -134,7 +134,7 @@ class BeerList extends Component {
         loadMore={() => this.getBeerList(this.state.p, 20)}
         hasMore={this.state.hasMore}
         loader={this.loaderIcon}
-        threshold={200}
+        threshold={100}
       >
         {this.state.beerItems &&
          <div style={styles.beerList}>

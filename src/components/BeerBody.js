@@ -85,28 +85,32 @@ const BeerBody = (props) => {
       { beer.breweries[0] &&
         <div>
           { beer.breweries[0].website ?
-            <a href={beer.breweries[0].website}><strong>{beer.breweries[0].name}</strong></a>
+            <a href={ beer.breweries[0].website }>
+              <strong>{ beer.breweries[0].name }</strong>
+            </a>
             :
-            <strong>{beer.breweries[0].name}</strong>
+            <strong>{ beer.breweries[0].name }</strong>
           }
           <br />
           { beer.breweries[0].locations &&
             <span>
-              {beer.breweries[0].locations[0].locality},
-              {' '}
-              {beer.breweries[0].locations[0].country.displayName}
+              { beer.breweries[0].locations[0].locality },
+              { ' ' }
+              { beer.breweries[0].locations[0].country.displayName }
               <br />
             </span>
           }
           { beer.breweries[0].locations &&
             <i>
               { beer.breweries[0].locations[0].locationTypeDisplay }
-              { beer.breweries[0].established && <span> - Est. {beer.breweries[0].established}</span> }
+              { beer.breweries[0].established &&
+                <span> - Est. { beer.breweries[0].established }</span> }
               <br />
             </i>
           }
           <br />
-          { beer.breweries[0].description && <p>{beer.breweries[0].description}</p> }
+          { beer.breweries[0].description &&
+            <p>{ beer.breweries[0].description }</p> }
         </div>
       }
     </div>

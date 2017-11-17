@@ -7,6 +7,12 @@ import beer from './beer.png';
 import breweryDb from './breweryDb.png';
 import './App.css';
 
+const styles = {
+  logo: {
+    height: '32px', width: 'auto', marginRight: '18px'
+  }
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -67,12 +73,25 @@ class App extends Component {
                   alignItems: 'center'
                 }}
               >
-                <img src={beer} style={{ height: '32px', width: 'auto', marginRight: '18px' }} alt="" />
-                <h4 style={{ marginRight: 'auto' }}>Beer Draft</h4>
+                <img src={beer} style={styles.logo} alt="logo" />
+                <h4 style={{ marginRight: 'auto' }}>
+                  Beer Draft
+                </h4>
                 {this.state.user ?
-                 <Button bsStyle="primary" style={{ marginLeft: 'auto' }} onClick={this.logout}>Logout</Button>
+                 <Button
+                   bsStyle="primary"
+                   style={{ marginLeft: 'auto' }}
+                   onClick={this.logout}>
+                   Logout
+                 </Button>
                  :
-                 <Button bsStyle="primary" style={{ marginLeft: 'auto' }} onClick={this.login}>Login</Button>
+                 <Button
+                   bsStyle="primary"
+                   style={{ marginLeft: 'auto' }}
+                   onClick={this.login}
+                 >
+                   Login
+                 </Button>
                 }
               </div>
             </Navbar.Brand>
@@ -83,13 +102,14 @@ class App extends Component {
               <NavDropdown eventKey={1} title="Beer" id="basic-nav-dropdown">
                 <MenuItem
                   eventKey='beer'
-                  onSelect={() => this.filter('beer')}>
+                  onSelect={() => this.filter('beer')}
+                >
                   All Beers
                 </MenuItem>
                 <MenuItem
                   eventKey='featured'
-                  disabled
-                  onSelect={() => this.filter('featured')}>
+                  onSelect={() => this.filter('features')}
+                >
                   Featured Beers
                 </MenuItem>
               </NavDropdown>
